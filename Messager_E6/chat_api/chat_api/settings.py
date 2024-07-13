@@ -41,8 +41,17 @@ INSTALLED_APPS = [
     # 'django.contrib.flatpages',
 
     'mainapp',
-    'easy_thumbnails',
 
+    'easy_thumbnails',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'rest_framework',
+    'rest_framework.authtoken',
+    'dj_rest_auth',
+    'dj_rest_auth.registration',
+    'corsheaders',
+    'channels',
 
 ]
 
@@ -51,12 +60,17 @@ SITE_ID = 1
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'allauth.account.middleware.AccountMiddleware',
 ]
+
+CORS_ALLOW_ALL_ORIGINS = True
+# CORS_URLS_REGEX = r'^/api/.*$'
 
 ROOT_URLCONF = 'chat_api.urls'
 
@@ -76,7 +90,13 @@ TEMPLATES = [
     },
 ]
 
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
 WSGI_APPLICATION = 'chat_api.wsgi.application'
+ASGI_APPLICATION = 'chat_api.asgi.application'
 
 
 # Database
@@ -112,7 +132,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
 
-LANGUAGE_CODE = 'ru'
+LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'
 
@@ -128,10 +148,36 @@ STATIC_URL = 'static/'
 MEDIA_ROOT = BASE_DIR / 'media'
 MEDIA_URL = '/media/'
 
-
-
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+AUTH_USER_MODEL = 'mainapp.User'
+
+# LOGIN_URL = 'account_login'
+
+TOKEN_MODEL = None
+
+ACCOUNT_EMAIL_REQUIRED = False
+ACCOUNT_UNIQUE_EMAIL = True
+ACCOUNT_USERNAME_REQUIRED = True
+ACCOUNT_AUTHENTICATION_METHOD = 'username'  # 'username' 'email' 'username_email'
+ACCOUNT_EMAIL_VERIFICATION = 'none'  # 'none' 'mandatory' 'optional'
+
+SITE_URL = 'http://127.0.0.1:8000/'
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels.layers.InMemoryChannelLayer"
+    }
+}
+
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        # "rest_framework.authentication.TokenAuthentication",
+        'dj_rest_auth.authentication.JWTAuthentication',
+    ]
+}

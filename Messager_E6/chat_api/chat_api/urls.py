@@ -17,9 +17,28 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path, include
-from django.conf import settings
+from django.views.generic import TemplateView
 from django.conf.urls.static import static
+from django.conf import settings
+
+from rest_framework import routers
+from dj_rest_auth.registration.views import RegisterView
+from dj_rest_auth.views import LoginView, LogoutView, UserDetailsView
+from mainapp import views
+
+router = routers.DefaultRouter()
+router.register(r'room', views.RoomViewset)
+router.register(r'user', views.UserViewset)
+router.register(r'post', views.PostViewset)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', include(router.urls)),
+    # path('api/auth/', include('mainapp.urls')),
+    path('api/auth/', include('dj_rest_auth.urls')),
+    path('api/auth/registration/', include('dj_rest_auth.registration.urls')),
+    path('api/', include('rest_framework.urls', namespace='rest_framework')),
+    path('accounts/', include('allauth.urls')),
 ]
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

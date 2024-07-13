@@ -4,17 +4,17 @@ from django.contrib.auth.models import AbstractUser
 from easy_thumbnails.fields import ThumbnailerImageField
 
 
+class Room(models.Model):
+    name = models.CharField(max_length=128, unique=True)
+
+
 class User(AbstractUser):
-    name = models.CharField(max_length=32, unique=True)
     avatar = ThumbnailerImageField(
         resize_source={'size': (300, 300), 'crop': 'smart'},
         upload_to='avatar',
         default='avatar/default.png',
     )
-
-
-class Room(models.Model):
-    name = models.CharField(max_length=128, unique=True)
+    room = models.OneToOneField(Room, on_delete=models.SET_NULL, null=True)
 
 
 class Post(models.Model):
