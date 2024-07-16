@@ -158,7 +158,7 @@ AUTH_USER_MODEL = 'mainapp.User'
 
 # LOGIN_URL = 'account_login'
 
-TOKEN_MODEL = None
+# TOKEN_MODEL = None
 
 ACCOUNT_EMAIL_REQUIRED = False
 ACCOUNT_UNIQUE_EMAIL = True
@@ -176,10 +176,16 @@ CHANNEL_LAYERS = {
     }
 }
 
+REST_USE_JWT = True
+
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": [
-        'rest_framework.authentication.TokenAuthentication',
+        # 'rest_framework.authentication.TokenAuthentication',
         # 'dj_rest_auth.authentication.JWTAuthentication',
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ]
+}
+
+DJ_REST_AUTH = {
+    'TOKEN_MODEL': None,
 }
