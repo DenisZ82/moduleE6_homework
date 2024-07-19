@@ -3,8 +3,8 @@ const websocket = new WebSocket('ws://localhost:8000/chat/');
 
 const output = document.getElementById('output');
 
-const btnReg = document.querySelector('.btn_reg')
-const btnLogin = document.querySelector('.btn_login')
+// const btnReg = document.querySelector('.btn_reg')
+// const btnLogin = document.querySelector('.btn_login')
 
 
 // регистрация пользователя
@@ -117,3 +117,26 @@ document.getElementById('logoutButton').addEventListener('click', function() {
         console.error('Error:', error);
     });
 });
+
+// Список комнат
+document.getElementById('outputRooms').addEventListener('click', function() {
+
+    output.innerHTML = `
+    <div class="div">
+        <h1>Список комнат</h1>
+    </div>
+    `;
+});
+
+
+// document.querySelector('#room-name-input').focus();
+// document.querySelector('#room-name-input').onkeyup = function(e) {
+//     if (e.keyCode === 13) {  // enter, return
+//         document.querySelector('#room-name-submit').click();
+//     }
+// };
+
+// document.querySelector('#room-name-submit').onclick = function(e) {
+//     var roomName = document.querySelector('#room-name-input').value;
+//     window.location.pathname = '/chat/' + roomName + '/';
+// };
