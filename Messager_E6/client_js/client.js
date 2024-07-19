@@ -1,11 +1,27 @@
-const domain = ('http://localhost:8000/');
-const websocket = new WebSocket('ws://localhost:8000/chat/');
+const domain = 'http://localhost:8000';
+// const websocket = new WebSocket('ws://localhost:8000/chat/');
 
 const output = document.getElementById('output');
+const outputRoomsButton = document.getElementById('outputRooms');
+const roomList = document.getElementById('roomList');
 
 // const btnReg = document.querySelector('.btn_reg')
 // const btnLogin = document.querySelector('.btn_login')
+// const outputRooms = document.querySelector('.outputRooms')
 
+outputRoomsButton.addEventListener('click', function() {
+    fetch(`${domain}/api/rooms/`)
+        .then(response => response.json())
+        .then(data => {
+            roomList.innerHTML = ''; // Очистка списка перед добавлением новых комнат
+            data.forEach(room => {
+                const li = document.createElement('li');
+                li.textContent = `${room.name}`;
+                roomList.appendChild(li);
+            });
+        })
+        .catch(error => console.error('Error fetching rooms:', error));
+});
 
 // регистрация пользователя
 
@@ -119,14 +135,14 @@ document.getElementById('logoutButton').addEventListener('click', function() {
 });
 
 // Список комнат
-document.getElementById('outputRooms').addEventListener('click', function() {
+// document.getElementById('outputRooms').addEventListener('click', function(event) {
 
-    output.innerHTML = `
-    <div class="div">
-        <h1>Список комнат</h1>
-    </div>
-    `;
-});
+//     output.innerHTML = `
+//     <div class="div">
+//         <h1>Список комнат</h1>
+//     </div>
+//     `;
+// });
 
 
 // document.querySelector('#room-name-input').focus();

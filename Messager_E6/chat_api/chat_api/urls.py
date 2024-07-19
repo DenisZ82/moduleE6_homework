@@ -28,19 +28,19 @@ from rest_framework_simplejwt.views import (TokenObtainPairView, TokenRefreshVie
 from mainapp import views
 
 router = routers.DefaultRouter()
-router.register(r'room', views.RoomViewset)
-router.register(r'user', views.UserViewset)
-router.register(r'post', views.PostViewset)
+router.register(r'rooms', views.RoomViewset)
+router.register(r'users', views.UserViewset)
+router.register(r'posts', views.PostViewset)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include(router.urls)),
-    # path('api/auth/', include('mainapp.urls')),
+    path('api/', include(router.urls)),
+    path('api/auth/', include('mainapp.urls')),
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
-    path('api/auth/', include('dj_rest_auth.urls')),
-    path('api/auth/registration/', include('dj_rest_auth.registration.urls')),
-    path('api/', include('rest_framework.urls', namespace='rest_framework')),
+    # path('api/auth/', include('dj_rest_auth.urls')),
+    # path('api/auth/registration/', include('dj_rest_auth.registration.urls')),
+    # path('api/', include('rest_framework.urls', namespace='rest_framework')),
     path('accounts/', include('allauth.urls')),
 ]
 
