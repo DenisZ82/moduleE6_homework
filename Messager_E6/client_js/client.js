@@ -3,11 +3,11 @@ const domain = 'http://localhost:8000';
 
 const output = document.getElementById('output');
 const outputRoomsButton = document.getElementById('outputRooms');
+const createRoomButton = document.getElementById('createRoom');
 const roomList = document.getElementById('roomList');
 
-// const btnReg = document.querySelector('.btn_reg')
-// const btnLogin = document.querySelector('.btn_login')
-// const outputRooms = document.querySelector('.outputRooms')
+
+// Список комнат
 
 outputRoomsButton.addEventListener('click', function() {
     fetch(`${domain}/api/rooms/`)
@@ -23,23 +23,38 @@ outputRoomsButton.addEventListener('click', function() {
         .catch(error => console.error('Error fetching rooms:', error));
 });
 
-// регистрация пользователя
+// Создание комнаты
 
-// btnReg.addEventListener('click', () => {
-//     output.innerHTML = `
-//     <div class="div">
-//         <form id="registrationForm">
-//             <label for="username">Username:</label>
-//             <input type="text" id="username" name="username" required><br><br>
-//             <label for="password1">Password:</label>
-//             <input type="password" id="password1" name="password1" required><br><br>
-//             <label for="password2">Confirm Password:</label>
-//             <input type="password" id="password2" name="password2" required><br><br>
-//             <button type="submit">Register</button>
-//        </form>
-//     </div>
-//     `;
-// });
+document.getElementById('createRoomForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    const roomname = document.getElementById('roomname').value;
+
+    fetch(`${domain}/api/rooms/`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            name: roomname,
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.key) {
+            alert('Room created successfully!');
+        } else {
+            // Обработка ошибок
+            alert('Room created failed: ' + JSON.stringify(data));
+        }
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+    });
+
+});
+
+// регистрация пользователя
 
 document.getElementById('registrationForm').addEventListener('submit', function(event) {
     event.preventDefault();
@@ -133,6 +148,32 @@ document.getElementById('logoutButton').addEventListener('click', function() {
         console.error('Error:', error);
     });
 });
+
+
+
+
+// Мусор (удалить при завершении проекта)
+
+// const btnReg = document.querySelector('.btn_reg')
+// const btnLogin = document.querySelector('.btn_login')
+// const outputRooms = document.querySelector('.outputRooms')
+
+// btnReg.addEventListener('click', () => {
+//     output.innerHTML = `
+//     <div class="div">
+//         <form id="registrationForm">
+//             <label for="username">Username:</label>
+//             <input type="text" id="username" name="username" required><br><br>
+//             <label for="password1">Password:</label>
+//             <input type="password" id="password1" name="password1" required><br><br>
+//             <label for="password2">Confirm Password:</label>
+//             <input type="password" id="password2" name="password2" required><br><br>
+//             <button type="submit">Register</button>
+//        </form>
+//     </div>
+//     `;
+// });
+
 
 // Список комнат
 // document.getElementById('outputRooms').addEventListener('click', function(event) {
