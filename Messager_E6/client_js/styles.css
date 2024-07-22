@@ -10844,3 +10844,9 @@ textarea.form-control-lg {
 .btn2:hover, .nav-link:focus {
   color: var(--bs-nav-link-hover-color);
 }
+
+.table-center {
+    width: 600px; /* Ширина таблицы */
+    border: 3px solid green; /* Рамка вокруг таблицы */
+    margin: auto; /* Выравниваем таблицу по центру окна  */
+   }

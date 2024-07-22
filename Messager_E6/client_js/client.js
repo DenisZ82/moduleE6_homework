@@ -6,6 +6,8 @@ const outputRoomsButton = document.getElementById('outputRooms');
 const createRoomButton = document.getElementById('createRoom');
 const roomList = document.getElementById('roomList');
 
+const divChat = document.querySelector('divChat');
+
 
 // Список комнат
 
@@ -15,9 +17,14 @@ outputRoomsButton.addEventListener('click', function() {
         .then(data => {
             roomList.innerHTML = ''; // Очистка списка перед добавлением новых комнат
             data.forEach(room => {
-                const li = document.createElement('li');
-                li.textContent = `${room.name}`;
-                roomList.appendChild(li);
+                const tr = document.createElement('tr');
+                const td = document.createElement('td');                
+                td.textContent = `${room.name}`;
+                tr.appendChild(td);
+                const td2 = document.createElement('td');
+                td2.innerHTML = `<button>Подключиться</button>`;
+                tr.appendChild(td2);
+                roomList.appendChild(tr);
             });
         })
         .catch(error => console.error('Error fetching rooms:', error));
@@ -41,7 +48,7 @@ document.getElementById('createRoomForm').addEventListener('submit', function(ev
     })
     .then(response => response.json())
     .then(data => {
-        if (data.key) {
+        if (data) {
             alert('Room created successfully!');
         } else {
             // Обработка ошибок
@@ -78,10 +85,10 @@ document.getElementById('registrationForm').addEventListener('submit', function(
     })
     .then(response => response.json())
     .then(data => {
-        if (data.key) {
+        if (data) {
             alert('Registration successful!');
             // Возможно, вы захотите сохранить токен и перенаправить пользователя
-            localStorage.setItem('token', data.key);
+            // localStorage.setItem('token', data.key);
         } else {
             // Обработка ошибок
             alert('Registration failed: ' + JSON.stringify(data));
@@ -153,6 +160,22 @@ document.getElementById('logoutButton').addEventListener('click', function() {
 
 
 // Мусор (удалить при завершении проекта)
+
+// Список комнат
+
+// outputRoomsButton.addEventListener('click', function() {
+//     fetch(`${domain}/api/rooms/`)
+//         .then(response => response.json())
+//         .then(data => {
+//             roomList.innerHTML = ''; // Очистка списка перед добавлением новых комнат
+//             data.forEach(room => {
+//                 const li = document.createElement('li');
+//                 li.textContent = `${room.name}`;                 
+//                 roomList.appendChild(li);
+//             });
+//         })
+//         .catch(error => console.error('Error fetching rooms:', error));
+// });
 
 // const btnReg = document.querySelector('.btn_reg')
 // const btnLogin = document.querySelector('.btn_login')
