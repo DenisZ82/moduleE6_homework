@@ -4,12 +4,12 @@ from channels.generic.websocket import WebsocketConsumer
 from asgiref.sync import async_to_sync
 
 
-def roomlist():
-    objects = Room.objects.filter()
-    list = {'RoomList': 'RoomList'}
-    for object in objects:
-        list[object.id] = object.name
-    return list
+# def roomlist():
+#     objects = Room.objects.filter()
+#     list = {'RoomList': 'RoomList'}
+#     for object in objects:
+#         list[object.id] = object.name
+#     return list
 
 
 class ChatConsumer(WebsocketConsumer):
